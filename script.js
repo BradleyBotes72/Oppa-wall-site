@@ -1,3 +1,4 @@
+const BASE_PRICE = 900;
 const canvas = document.getElementById('gridCanvas');
 const ctx = canvas.getContext('2d');
 const colorPicker = document.getElementById('colorPicker');
@@ -43,19 +44,25 @@ canvas.addEventListener('click', (e) => {
 });
 
 function updatePrice() {
+  // Calculate how many blocks total
   const stdCols = 30;
   const stdRows = 13;
   const stdBlocks = stdCols * stdRows;
   const currentBlocks = cols * rows;
   const extraBlocks = Math.max(currentBlocks - stdBlocks, 0);
-  const extraBlockPrice = extraBlocks * 2.5;
+  const extraBlocksCost = extraBlocks * 2.5;
 
+  // Calculate extra colours
   const usedColors = new Set(Object.values(colors));
   const extraColors = Math.max(usedColors.size - 1, 0);
-  const extraColorPrice = extraColors * 80;
+  const extraColorCost = extraColors * 80;
 
-  const total = 0 + extraBlockPrice + extraColorPrice;
-  priceDisplay.textContent = `Total Price: R${total.toFixed(2)} (Extra blocks: ${extraBlocks}, Extra colours: ${extraColors})`;
+  // Now include the base price
+  const total = BASE_PRICE + extraBlocksCost + extraColorCost;
+
+  priceDisplay.textContent =
+    `Total Price: R${total.toFixed(2)} ` +
+    `(Base R${BASE_PRICE} + Blocks R${extraBlocksCost.toFixed(2)} + Colours R${extraColorCost.toFixed(2)})`;
 }
 
 saveButton.addEventListener('click', () => {
