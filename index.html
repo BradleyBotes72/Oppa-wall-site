@@ -4,93 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OPPA Wall Art - Custom Sound Diffuser Panels</title>
+  <!-- external stylesheet -->
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* ---------- Basic Reset & Typography ---------- */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f4f4;
-      color: #333;
-      text-align: center;
-    }
-    h1, h2 { margin: 0.5em 0; }
-
-    /* ---------- Hero Section (change URL here) ---------- */
-    header.hero {
-      background: url('https://via.placeholder.com/1500x500') no-repeat center center/cover;
-      padding: 4em 0;
-      color: #fff;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-    }
-    header.hero h1 { font-size: 3em; margin-bottom: 0.2em; }
-    header.hero p  { font-size: 1.5em; }
-
-    /* ---------- Product Cards (change image URLs below) ---------- */
-    .product-cards {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      margin: 2em auto; max-width: 1000px;
-    }
-    .product-card {
-      background: #fff; border: 1px solid #ddd; margin: 1em;
-      padding: 1em; width: 250px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border-radius: 5px;
-    }
-    .product-card img {
-      width: 100%; height: auto; border-radius: 3px;
-    }
-    .product-card h3 { margin: 0.5em 0; }
-    .product-card p  { margin: 0.5em 0; font-weight: bold; }
-    .product-card button {
-      background: #ff6600; color: #fff; border: none;
-      padding: 0.5em 1em; cursor: pointer; border-radius: 3px;
-    }
-    .product-card button:hover { background: #e65c00; }
-
-    /* ---------- Design Grid Section ---------- */
-    .design-section {
-      max-width: 800px; margin: 2em auto; background: #fff;
-      padding: 1em; border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .controls {
-      margin-bottom: 1em; text-align: center;
-    }
-    .controls label {
-      margin: 0 0.5em; font-weight: bold;
-    }
-    .controls input {
-      width: 6em; text-align: center;
-    }
-    canvas {
-      border: 1px solid #ccc; display: block; margin: 1em auto;
-      cursor: crosshair;
-    }
-    #priceDisplay {
-      font-size: 1.2em; margin-top: 0.5em; font-weight: bold;
-    }
-    #downloadPNG {
-      margin-top: 0.5em; padding: 0.5em 1em;
-      background: #ff6600; color: #fff; border: none;
-      cursor: pointer; border-radius: 3px;
-    }
-    #downloadPNG:hover { background: #e65c00; }
-
-    /* ---------- Tally Form Section ---------- */
-    .tally-form {
-      max-width: 600px; margin: 2em auto;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border-radius: 5px; overflow: hidden;
-    }
-    .tally-form iframe {
-      width: 100%; border: 0; height: 600px;
-    }
-
-    /* ---------- Footer ---------- */
-    footer {
-      background: #333; color: #fff; padding: 1em 0; margin-top: 2em;
-    }
-  </style>
 </head>
 <body>
   <!-- Hero -->
@@ -99,21 +14,24 @@
     <p>Craft your own custom sound diffuser panels</p>
   </header>
 
-  <!-- Products (purely decorative/selections) -->
+  <!-- Products (decorative/selectable cards) -->
   <section class="product-cards">
     <div class="product-card" data-name="Plain Solid Colours" data-price="600">
       <img src="https://via.placeholder.com/250x150" alt="Plain Solid Colours">
-      <h3>Plain Solid Colours</h3><p>R600</p>
+      <h3>Plain Solid Colours</h3>
+      <p>R600</p>
       <button onclick="selectProduct(this)">Select Product</button>
     </div>
     <div class="product-card" data-name="Ombre (1220×450)" data-price="880">
       <img src="https://via.placeholder.com/250x150" alt="Ombre 1220x450">
-      <h3>Ombre (1220×450)</h3><p>R880</p>
+      <h3>Ombre (1220×450)</h3>
+      <p>R880</p>
       <button onclick="selectProduct(this)">Select Product</button>
     </div>
     <div class="product-card" data-name="Ombre (1500×800)" data-price="1600">
       <img src="https://via.placeholder.com/250x150" alt="Ombre 1500x800">
-      <h3>Ombre (1500×800)</h3><p>R1600</p>
+      <h3>Ombre (1500×800)</h3>
+      <p>R1600</p>
       <button onclick="selectProduct(this)">Select Product</button>
     </div>
   </section>
@@ -143,8 +61,8 @@
   <!-- Tally Order Form -->
   <section class="tally-form">
     <h2>Place Your Order</h2>
-    <!-- replace with your Tally URL -->
-    <iframe src="https://tally.so/r/wMGQ4M"></iframe>
+    <!-- replace the src with your actual Tally form URL -->
+    <iframe src="https://tally.so/r/wMGQ4M" frameborder="0"></iframe>
   </section>
 
   <!-- Footer -->
@@ -152,137 +70,7 @@
     <p>&copy; 2025 OPPA Wall Art</p>
   </footer>
 
-  <script>
-    // Constants
-    const BLOCK_MM = 38;
-    const COST_PER_EXTRA_BLOCK = 2.5;
-    const COST_PER_EXTRA_COLOR = 80;
-    const STD_WIDTH_MM = 1254;
-    const STD_HEIGHT_MM = 456;
-    const STD_BLOCKS = Math.floor(STD_WIDTH_MM/BLOCK_MM) * Math.floor(STD_HEIGHT_MM/BLOCK_MM);
-    const white = '#ffffff';
-
-    // Elements
-    const canvas = document.getElementById('gridCanvas');
-    const ctx = canvas.getContext('2d');
-    const wInput = document.getElementById('gridWidthMM');
-    const hInput = document.getElementById('gridHeightMM');
-    const frameColorInput = document.getElementById('frameColor');
-    const gridColorInput = document.getElementById('gridColor');
-    const priceDisplay = document.getElementById('priceDisplay');
-    const downloadBtn = document.getElementById('downloadPNG');
-
-    // State
-    let rows, cols, cellSizePx = 20;
-    let gridData = [];
-
-    // Initialize grid based on inputs
-    function initGrid() {
-      const widthMM = parseInt(wInput.value);
-      const heightMM = parseInt(hInput.value);
-      cols = Math.floor(widthMM / BLOCK_MM);
-      rows = Math.floor(heightMM / BLOCK_MM);
-      canvas.width = cols * cellSizePx;
-      canvas.height = rows * cellSizePx;
-      gridData = Array.from({length: rows}, () => Array(cols).fill(white));
-      drawGrid();
-      calcPrice();
-    }
-
-    // Draw grid and frame
-    function drawGrid() {
-      // fill blocks
-      for (let r=0; r<rows; r++){
-        for (let c=0; c<cols; c++){
-          ctx.fillStyle = gridData[r][c];
-          ctx.fillRect(c*cellSizePx, r*cellSizePx, cellSizePx, cellSizePx);
-          ctx.strokeStyle = '#ddd';
-          ctx.strokeRect(c*cellSizePx, r*cellSizePx, cellSizePx, cellSizePx);
-        }
-      }
-      // draw frame border
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = frameColorInput.value;
-      ctx.strokeRect(0, 0, canvas.width, canvas.height);
-    }
-
-    // Mouse interactions for multi-drag coloring
-    let isDragging=false, start=null, end=null;
-    function getCell(e){
-      const rect = canvas.getBoundingClientRect();
-      return {
-        col: Math.floor((e.clientX-rect.left)/cellSizePx),
-        row: Math.floor((e.clientY-rect.top)/cellSizePx)
-      };
-    }
-    canvas.addEventListener('mousedown', e=>{
-      isDragging=true; start=end=getCell(e); drawGrid();
-    });
-    canvas.addEventListener('mousemove', e=>{
-      if(!isDragging) return;
-      end=getCell(e); drawGrid();
-    });
-    canvas.addEventListener('mouseup', ()=>{
-      if(!isDragging) return;
-      const color = gridColorInput.value;
-      const minR=Math.min(start.row,end.row),
-            maxR=Math.max(start.row,end.row),
-            minC=Math.min(start.col,end.col),
-            maxC=Math.max(start.col,end.col);
-      for(let r=minR;r<=maxR;r++){
-        for(let c=minC;c<=maxC;c++){
-          if(r<rows && c<cols) gridData[r][c]=color;
-        }
-      }
-      isDragging=false; start=end=null; drawGrid(); calcPrice();
-    });
-
-    // Calculate price: extra blocks + extra colors
-    function calcPrice(){
-      // count non-white blocks
-      let blockCount=0;
-      let colorSet=new Set();
-      for(let r=0;r<rows;r++){
-        for(let c=0;c<cols;c++){
-          const colr=gridData[r][c];
-          if(colr!==white){
-            blockCount++;
-            colorSet.add(colr);
-          }
-        }
-      }
-      const extraBlocks = Math.max(blockCount - STD_BLOCKS, 0);
-      const extraBlocksCost = extraBlocks * COST_PER_EXTRA_BLOCK;
-      const colorCount = colorSet.size;
-      const extraColors = Math.max(colorCount - 1, 0);
-      const extraColorCost = extraColors * COST_PER_EXTRA_COLOR;
-      const total = extraBlocksCost + extraColorCost;
-      priceDisplay.textContent = 
-        `Total Price: R${total.toFixed(2)} ` +
-        `(Blocks: +${extraBlocks}×R2.50 ; Colors: +${extraColors}×R80)`;
-    }
-
-    // Download PNG
-    downloadBtn.addEventListener('click', ()=>{
-      const link = document.createElement('a');
-      link.download = 'oppa_design.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
-
-    // Rebuild whenever size or frame color changes
-    [wInput,hInput,frameColorInput].forEach(el=>
-      el.addEventListener('change', initGrid)
-    );
-
-    // Initial setup
-    initGrid();
-
-    // Dummy product selection alert
-    function selectProduct(btn){
-      const card = btn.closest('.product-card');
-      alert(`Selected ${card.dataset.name} @ R${card.dataset.price}.  Please finish order below.`);
-    }
-  </script>
+  <!-- external script -->
+  <script src="script.js" defer></script>
 </body>
 </html>
