@@ -2,31 +2,322 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OPPA Wall Art</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OPPA Wall Art - Custom Sound Diffuser Panels</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ---------- Basic Reset & Typography ---------- */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      text-align: center;
+    }
+    h1, h2 {
+      margin: 0.5em 0;
+    }
+    /* ---------- Hero Section ---------- */
+    header.hero {
+      background: url('https://via.placeholder.com/1500x500') no-repeat center center/cover;
+      padding: 4em 0;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
+    header.hero h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+    }
+    header.hero p {
+      font-size: 1.5em;
+    }
+    /* ---------- Product Cards ---------- */
+    .product-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 2em auto;
+      max-width: 1000px;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      margin: 1em;
+      padding: 1em;
+      width: 250px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 3px;
+    }
+    .product-card h3 {
+      margin: 0.5em 0;
+    }
+    .product-card p {
+      margin: 0.5em 0;
+      font-weight: bold;
+    }
+    .product-card button {
+      background: #ff6600;
+      color: #fff;
+      border: none;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      font-size: 1em;
+      border-radius: 3px;
+    }
+    .product-card button:hover {
+      background: #e65c00;
+    }
+    /* ---------- Design Grid Section ---------- */
+    .design-section {
+      max-width: 800px;
+      margin: 2em auto;
+      background: #fff;
+      padding: 1em;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .controls {
+      margin-bottom: 1em;
+      text-align: center;
+    }
+    .controls label {
+      margin: 0 0.5em;
+      font-weight: bold;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 0 auto;
+      cursor: crosshair;
+    }
+    /* ---------- Order Form Section ---------- */
+    .order-form {
+      background: #fff;
+      max-width: 600px;
+      margin: 2em auto;
+      padding: 1em;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .order-form label {
+      display: block;
+      margin: 1em 0 0.2em;
+      text-align: left;
+    }
+    .order-form input, .order-form select, .order-form button {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 1em;
+      margin-bottom: 1em;
+    }
+    .order-form button {
+      background: #ff6600;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .order-form button:hover {
+      background: #e65c00;
+    }
+    footer {
+      background: #333;
+      color: #fff;
+      padding: 1em 0;
+      margin-top: 2em;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>OPPA Wall Art</h1>
-    <p>Custom Sound Diffuser Panels</p>
+  <!-- Welcome Hero Section -->
+  <header class="hero">
+    <h1>Welcome to OPPA Wall Art</h1>
+    <p>Crafting custom sound diffuser panels to elevate your space.</p>
   </header>
 
-  <section id="order">
-    <h2>Create Your Design</h2>
+  <!-- Product Cards Section -->
+  <section class="product-cards">
+    <!-- Product Card 1 -->
+    <div class="product-card" data-name="Plain Solid Colours" data-price="600">
+      <img src="https://via.placeholder.com/250x150" alt="Plain Solid Colours">
+      <h3>Plain Solid Colours</h3>
+      <p>Price: R600</p>
+      <button onclick="selectProduct(this)">Select Product</button>
+    </div>
+    <!-- Product Card 2 -->
+    <div class="product-card" data-name="Ombre Colour (1220x450)" data-price="880">
+      <img src="https://via.placeholder.com/250x150" alt="Ombre Colour (1220x450)">
+      <h3>Ombre Colour (1220x450)</h3>
+      <p>Price: R880</p>
+      <button onclick="selectProduct(this)">Select Product</button>
+    </div>
+    <!-- Product Card 3 -->
+    <div class="product-card" data-name="Ombre Colour (1500x800)" data-price="1600">
+      <img src="https://via.placeholder.com/250x150" alt="Ombre Colour (1500x800)">
+      <h3>Ombre Colour (1500x800)</h3>
+      <p>Price: R1600</p>
+      <button onclick="selectProduct(this)">Select Product</button>
+    </div>
+  </section>
+
+  <!-- Design Grid & Controls Section -->
+  <section class="design-section">
+    <h2>Customize Your Design</h2>
+    <div class="controls">
+      <!-- Frame Color Selector -->
+      <label for="frameColor">Frame Color:</label>
+      <input type="color" id="frameColor" value="#000000">
+      <!-- Size Selector -->
+      <label for="sizeSelector">Select Size:</label>
+      <select id="sizeSelector">
+        <option value="small">Small</option>
+        <option value="medium" selected>Medium</option>
+        <option value="large">Large</option>
+      </select>
+      <!-- Grid Cell Color Picker -->
+      <label for="gridColor">Select Block Color:</label>
+      <input type="color" id="gridColor" value="#FF6600">
+    </div>
     <canvas id="gridCanvas" width="600" height="260"></canvas>
-    <p>Select a color: <input type="color" id="colorPicker" value="#FF6600"></p>
   </section>
 
-  <section>
+  <!-- Order Form Section -->
+  <section class="order-form">
     <h2>Place Your Order</h2>
-    <iframe src="https://tally.so/r/wMGQ4M" width="100%" height="500" frameborder="0"></iframe>
+    <form id="orderForm" action="https://hook.eu2.make.com/nj12rtwytc4rbuf82gdv4fc80pct3ixk-url" method="POST">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required>
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      
+      <!-- Hidden fields to capture selected product and design data -->
+      <input type="hidden" id="selectedProduct" name="product">
+      <input type="hidden" id="productPrice" name="price">
+      <input type="hidden" id="designData" name="designData">
+      
+      <button type="submit">Submit Order</button>
+    </form>
   </section>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 OPPA Wall Art</p>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- JavaScript for Interactivity -->
+  <script>
+    /***********************
+     * PRODUCT SELECTION *
+     ***********************/
+    function selectProduct(btn) {
+      const card = btn.closest('.product-card');
+      const name = card.getAttribute('data-name');
+      const price = card.getAttribute('data-price');
+      document.getElementById('selectedProduct').value = name;
+      document.getElementById('productPrice').value = price;
+      alert('You selected ' + name + ' (Price: R' + price + ').\nNow customize your design!');
+    }
+
+    /**************************************
+     * DESIGN GRID WITH MULTI-SELECT & DRAG *
+     **************************************/
+    const canvas = document.getElementById('gridCanvas');
+    const ctx = canvas.getContext('2d');
+    const rows = 13;
+    const cols = 30;
+    const cellSize = 20;
+    // Initialize a 2D grid (all cells white)
+    let gridData = Array.from({length: rows}, () => Array(cols).fill("#ffffff"));
+
+    // Multi-select variables
+    let isDragging = false;
+    let dragStart = null;
+    let dragEnd = null;
+
+    function drawGrid() {
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          ctx.fillStyle = gridData[r][c];
+          ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+          ctx.strokeStyle = "#ddd";
+          ctx.strokeRect(c * cellSize, r * cellSize, cellSize, cellSize);
+        }
+      }
+      if (isDragging && dragStart && dragEnd) {
+        const minRow = Math.min(dragStart.row, dragEnd.row);
+        const maxRow = Math.max(dragStart.row, dragEnd.row);
+        const minCol = Math.min(dragStart.col, dragEnd.col);
+        const maxCol = Math.max(dragStart.col, dragEnd.col);
+        ctx.fillStyle = "rgba(255,102,0,0.3)";
+        ctx.fillRect(minCol * cellSize, minRow * cellSize, (maxCol - minCol + 1) * cellSize, (maxRow - minRow + 1) * cellSize);
+      }
+    }
+    drawGrid();
+
+    function getCellFromCoords(x, y) {
+      return {
+        col: Math.floor(x / cellSize),
+        row: Math.floor(y / cellSize)
+      };
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      const rect = canvas.getBoundingClientRect();
+      dragStart = getCellFromCoords(e.clientX - rect.left, e.clientY - rect.top);
+      dragEnd = dragStart;
+      drawGrid();
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const rect = canvas.getBoundingClientRect();
+      dragEnd = getCellFromCoords(e.clientX - rect.left, e.clientY - rect.top);
+      drawGrid();
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      if (!isDragging || !dragStart || !dragEnd) return;
+      const color = document.getElementById('gridColor').value;
+      const minRow = Math.min(dragStart.row, dragEnd.row);
+      const maxRow = Math.max(dragStart.row, dragEnd.row);
+      const minCol = Math.min(dragStart.col, dragEnd.col);
+      const maxCol = Math.max(dragStart.col, dragEnd.col);
+      for (let r = minRow; r <= maxRow; r++) {
+        for (let c = minCol; c <= maxCol; c++) {
+          gridData[r][c] = color;
+        }
+      }
+      isDragging = false;
+      dragStart = null;
+      dragEnd = null;
+      drawGrid();
+    });
+
+    document.getElementById('sizeSelector').addEventListener('change', function() {
+      // You can modify behavior based on size selection.
+      console.log("Size selected:", this.value);
+    });
+
+    /*************************************************
+     * CAPTURE DESIGN DATA ON ORDER FORM SUBMISSION  *
+     *************************************************/
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      const designJSON = JSON.stringify({
+        grid: gridData,
+        frameColor: document.getElementById('frameColor').value,
+        size: document.getElementById('sizeSelector').value
+      });
+      document.getElementById('designData').value = designJSON;
+      console.log("Design Data:", designJSON);
+    });
+  </script>
 </body>
 </html>
