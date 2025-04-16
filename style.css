@@ -1,3 +1,4 @@
+/* Reset & Base */
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
@@ -6,35 +7,157 @@ body {
   color: #333;
   text-align: center;
 }
-
 header {
   background: #ff6600;
   color: white;
   padding: 2rem 1rem;
 }
-
 section {
   padding: 2rem 1rem;
 }
 
-canvas {
-  border: 1px solid #ccc;
-  margin-top: 1rem;
-  cursor: crosshair;
+/* Hero (if you use .hero class instead of plain header) */
+header.hero {
+  background: url('images/hero.jpg') no-repeat center center/cover; /* change path */
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+header.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.2rem;
+}
+header.hero p {
+  font-size: 1.2rem;
 }
 
+/* Product Cards */
+.product-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+.product-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  width: 250px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 5px;
+}
+.product-card img {
+  width: 100%;
+  border-radius: 3px;
+}
+.product-card h3 {
+  margin: 0.5rem 0;
+}
+.product-card p {
+  margin: 0.5rem 0;
+  font-weight: bold;
+}
+.product-card button {
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.product-card button:hover {
+  background: #e65c00;
+}
+
+/* Design Section */
+.design-section {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 .controls {
   margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
 }
-
-input[type="number"], input[type="color"], button {
-  margin: 0.5rem;
-  padding: 0.5rem;
-}
-
-.price-display {
-  margin-top: 1rem;
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   font-weight: bold;
+}
+.controls input[type="number"],
+.controls input[type="color"],
+.controls button {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+canvas {
+  border: 1px solid #ccc;
+  display: block;
+  margin: 1rem auto;
+  cursor: crosshair;
+  width: 100%;      /* responsive */
+  height: auto;
+}
+#priceDisplay {
+  margin-top: 0.5rem;
   font-size: 1.2rem;
+  font-weight: bold;
   color: #ff6600;
+}
+#downloadPNG {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+#downloadPNG:hover {
+  background: #e65c00;
+}
+
+/* Tally Form */
+.tally-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.tally-form iframe {
+  width: 100%;
+  border: 0;
+  height: 600px;
+}
+
+/* Footer */
+footer {
+  background: #333;
+  color: #fff;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .product-card {
+    flex: 1 1 45%;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  .controls label,
+  .controls input,
+  .controls button {
+    width: 90%;
+  }
 }
