@@ -20,6 +20,7 @@
     }
     /* ---------- Hero Section ---------- */
     header.hero {
+      /* CHANGE THIS URL TO YOUR HERO IMAGE */
       background: url('https://via.placeholder.com/1500x500') no-repeat center center/cover;
       padding: 4em 0;
       color: #fff;
@@ -54,6 +55,7 @@
       height: auto;
       border-radius: 3px;
     }
+    /* To change a product image, update the <img src=""> URL below */
     .product-card h3 {
       margin: 0.5em 0;
     }
@@ -96,36 +98,20 @@
       margin: 0 auto;
       cursor: crosshair;
     }
-    /* ---------- Order Form Section ---------- */
-    .order-form {
-      background: #fff;
+    /* ---------- Tally Form Section ---------- */
+    .tally-form {
       max-width: 600px;
       margin: 2em auto;
-      padding: 1em;
-      border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      overflow: hidden;
     }
-    .order-form label {
-      display: block;
-      margin: 1em 0 0.2em;
-      text-align: left;
-    }
-    .order-form input, .order-form select, .order-form button {
+    .tally-form iframe {
       width: 100%;
-      padding: 0.5em;
-      font-size: 1em;
-      margin-bottom: 1em;
+      border: 0;
+      height: 600px;
     }
-    .order-form button {
-      background: #ff6600;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      border-radius: 3px;
-    }
-    .order-form button:hover {
-      background: #e65c00;
-    }
+    /* ---------- Footer ---------- */
     footer {
       background: #333;
       color: #fff;
@@ -145,6 +131,7 @@
   <section class="product-cards">
     <!-- Product Card 1 -->
     <div class="product-card" data-name="Plain Solid Colours" data-price="600">
+      <!-- Change the product image URL below -->
       <img src="https://via.placeholder.com/250x150" alt="Plain Solid Colours">
       <h3>Plain Solid Colours</h3>
       <p>Price: R600</p>
@@ -183,27 +170,18 @@
       <!-- Grid Cell Color Picker -->
       <label for="gridColor">Select Block Color:</label>
       <input type="color" id="gridColor" value="#FF6600">
+      <!-- New: Design Size in mm -->
+      <label for="gridSizeMM">Enter Design Size (mm):</label>
+      <input type="number" id="gridSizeMM" value="1000" min="100" step="10">
     </div>
     <canvas id="gridCanvas" width="600" height="260"></canvas>
   </section>
 
-  <!-- Order Form Section -->
-  <section class="order-form">
+  <!-- Tally Form Section -->
+  <section class="tally-form">
     <h2>Place Your Order</h2>
-    <form id="orderForm" action="https://hook.eu2.make.com/nj12rtwytc4rbuf82gdv4fc80pct3ixk-url" method="POST">
-      <label for="fullName">Full Name</label>
-      <input type="text" id="fullName" name="fullName" required>
-      
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-      
-      <!-- Hidden fields to capture selected product and design data -->
-      <input type="hidden" id="selectedProduct" name="product">
-      <input type="hidden" id="productPrice" name="price">
-      <input type="hidden" id="designData" name="designData">
-      
-      <button type="submit">Submit Order</button>
-    </form>
+    <!-- Replace the src URL below with your actual Tally form URL -->
+    <iframe src="https://tally.so/r/wMGQ4M" frameborder="0"></iframe>
   </section>
 
   <!-- Footer -->
@@ -214,29 +192,28 @@
   <!-- JavaScript for Interactivity -->
   <script>
     /***********************
-     * PRODUCT SELECTION *
+     * PRODUCT SELECTION  *
      ***********************/
     function selectProduct(btn) {
       const card = btn.closest('.product-card');
       const name = card.getAttribute('data-name');
       const price = card.getAttribute('data-price');
-      document.getElementById('selectedProduct').value = name;
-      document.getElementById('productPrice').value = price;
-      alert('You selected ' + name + ' (Price: R' + price + ').\nNow customize your design!');
+      // Here you might store these values in localStorage
+      // or use them to update your Tally form via URL parameters if desired.
+      alert('You selected ' + name + ' (Price: R' + price + ').\nPlease complete your order in the form below.');
     }
 
-    /**************************************
-     * DESIGN GRID WITH MULTI-SELECT & DRAG *
-     **************************************/
+    /*************************************************
+     * DESIGN GRID WITH MULTI-SELECT & DRAG FUNCTION  *
+     *************************************************/
     const canvas = document.getElementById('gridCanvas');
     const ctx = canvas.getContext('2d');
     const rows = 13;
     const cols = 30;
     const cellSize = 20;
-    // Initialize a 2D grid (all cells white)
+    // Initialize a 2D array for grid colors (default white)
     let gridData = Array.from({length: rows}, () => Array(cols).fill("#ffffff"));
 
-    // Multi-select variables
     let isDragging = false;
     let dragStart = null;
     let dragEnd = null;
@@ -301,23 +278,12 @@
       drawGrid();
     });
 
-    document.getElementById('sizeSelector').addEventListener('change', function() {
-      // You can modify behavior based on size selection.
-      console.log("Size selected:", this.value);
-    });
+    // The grid design can be captured if you wish to send its data elsewhere.
+    // For example, you might modify your Tally form URL with query parameters (if supported)
+    // or store the design in localStorage for later use.
+    // Here we simply log the grid data when the design grid is updated.
+    console.log("Current grid design:", JSON.stringify(gridData));
 
-    /*************************************************
-     * CAPTURE DESIGN DATA ON ORDER FORM SUBMISSION  *
-     *************************************************/
-    document.getElementById('orderForm').addEventListener('submit', function(e) {
-      const designJSON = JSON.stringify({
-        grid: gridData,
-        frameColor: document.getElementById('frameColor').value,
-        size: document.getElementById('sizeSelector').value
-      });
-      document.getElementById('designData').value = designJSON;
-      console.log("Design Data:", designJSON);
-    });
   </script>
 </body>
 </html>
