@@ -3,9 +3,6 @@ const BLOCK_MM = 38;
 const COST_PER_EXTRA_BLOCK = 2.5;
 const COST_PER_EXTRA_COLOR = 80;
 const BASE_PRICE = 900;
-const STD_WIDTH_MM = 1254;
-const STD_HEIGHT_MM = 456;
-const STD_BLOCKS = Math.floor(STD_WIDTH_MM / BLOCK_MM) * Math.floor(STD_HEIGHT_MM / BLOCK_MM);
 const WHITE = '#ffffff';
 const CELL_PX = 20;
 
@@ -22,6 +19,7 @@ const downloadBtn = document.getElementById('downloadPNG');
 // ───── State ─────
 let rows, cols;
 let gridData = [];
+let STD_BLOCKS = 0;
 
 // ───── Initialize Grid ─────
 function initGrid() {
@@ -29,8 +27,11 @@ function initGrid() {
   const heightMM = parseInt(hInput.value, 10);
   cols = Math.floor(widthMM / BLOCK_MM);
   rows = Math.floor(heightMM / BLOCK_MM);
+  STD_BLOCKS = cols * rows;
+
   canvas.width = cols * CELL_PX;
   canvas.height = rows * CELL_PX;
+
   gridData = Array.from({ length: rows }, () => Array(cols).fill(WHITE));
   drawGrid();
   calcPrice();
@@ -39,7 +40,6 @@ function initGrid() {
 // ───── Draw Grid & Frame ─────
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // Blocks
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       ctx.fillStyle = gridData[r][c];
@@ -48,7 +48,6 @@ function drawGrid() {
       ctx.strokeRect(c * CELL_PX, r * CELL_PX, CELL_PX, CELL_PX);
     }
   }
-  // Frame border
   ctx.lineWidth = 4;
   ctx.strokeStyle = frameColorInput.value;
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
@@ -95,11 +94,13 @@ function endDrag(e) {
   const minC = Math.min(dragStart.col, dragEnd.col);
   const maxC = Math.max(dragStart.col, dragEnd.col);
   const color = gridColorInput.value;
+
   for (let r = minR; r <= maxR; r++) {
     for (let c = minC; c <= maxC; c++) {
       if (r < rows && c < cols) gridData[r][c] = color;
     }
   }
+
   isDragging = false;
   drawGrid();
   calcPrice();
@@ -109,26 +110,25 @@ function endDrag(e) {
 function calcPrice() {
   let blockCount = 0;
   const usedColors = new Set();
+
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      if (gridData[r][c] !== WHITE) {
+      const color = gridData[r][c];
+      if (color !== WHITE) {
         blockCount++;
-        usedColors.add(gridData[r][c]);
+        usedColors.add(color);
       }
     }
   }
-  // Calculate extra blocks beyond standard
-  const extraBlocks = Math.max(blockCount - 394, 0);
+
+  const extraBlocks = Math.max(blockCount - STD_BLOCKS, 0);
   const extraBlocksCost = extraBlocks * COST_PER_EXTRA_BLOCK;
-  
-  // Calculate extra colors beyond the first one
+
   const extraColors = Math.max(usedColors.size - 1, 0);
   const extraColorsCost = extraColors * COST_PER_EXTRA_COLOR;
-  
-  // Total price
+
   const total = BASE_PRICE + extraBlocksCost + extraColorsCost;
-  
-  // Display the price
+
   priceDisplay.textContent =
     `Total Price: R${total.toFixed(2)} ` +
     `(Base R${BASE_PRICE}, +Blocks R${extraBlocksCost.toFixed(2)}, +Colours R${extraColorsCost.toFixed(2)})`;
@@ -158,7 +158,7 @@ canvas.addEventListener('touchend', endDrag);
 // ───── Start Up ─────
 initGrid();
 
-// ───── Product Selection (if you still use inline onclick) ─────
+// ───── Product Selection (if using inline onclick) ─────
 function selectProduct(btn) {
   const card = btn.closest('.product-card');
   alert(`Selected ${card.dataset.name} @ R${card.dataset.price}. Please complete the order below.`);
