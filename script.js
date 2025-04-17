@@ -1,10 +1,8 @@
 // ───── Constants ─────
 const BLOCK_MM = 38;
-const COST_PER_EXTRA_BLOCK = 2.5;
-const COST_PER_EXTRA_COLOR = 80;
-const BASE_PRICE = 900;
 const WHITE = '#ffffff';
 const CELL_PX = 20;
+const COST_PER_BLOCK = 2.4;
 
 // ───── Elements ─────
 const canvas = document.getElementById('gridCanvas');
@@ -19,7 +17,6 @@ const downloadBtn = document.getElementById('downloadPNG');
 // ───── State ─────
 let rows, cols;
 let gridData = [];
-let STD_BLOCKS = 0;
 
 // ───── Initialize Grid ─────
 function initGrid() {
@@ -27,7 +24,6 @@ function initGrid() {
   const heightMM = parseInt(hInput.value, 10);
   cols = Math.floor(widthMM / BLOCK_MM);
   rows = Math.floor(heightMM / BLOCK_MM);
-  STD_BLOCKS = cols * rows;
 
   canvas.width = cols * CELL_PX;
   canvas.height = rows * CELL_PX;
@@ -106,32 +102,13 @@ function endDrag(e) {
   calcPrice();
 }
 
-// ───── Price Calculation ─────
+// ───── Price Calculation (Flat Rate All Blocks) ─────
 function calcPrice() {
-  let blockCount = 0;
-  const usedColors = new Set();
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const color = gridData[r][c];
-      if (color !== WHITE) {
-        blockCount++;
-        usedColors.add(color);
-      }
-    }
-  }
-
-  const extraBlocks = Math.max(blockCount - STD_BLOCKS, 0);
-  const extraBlocksCost = extraBlocks * COST_PER_EXTRA_BLOCK;
-
-  const extraColors = Math.max(usedColors.size - 1, 0);
-  const extraColorsCost = extraColors * COST_PER_EXTRA_COLOR;
-
-  const total = BASE_PRICE + extraBlocksCost + extraColorsCost;
+  const totalBlocks = rows * cols;
+  const total = totalBlocks * COST_PER_BLOCK;
 
   priceDisplay.textContent =
-    `Total Price: R${total.toFixed(2)} ` +
-    `(Base R${BASE_PRICE}, +Blocks R${extraBlocksCost.toFixed(2)}, +Colours R${extraColorsCost.toFixed(2)})`;
+    `Total Price: R${total.toFixed(2)} (Total Blocks: ${totalBlocks} × R2.40)`;
 }
 
 // ───── Download as PNG ─────
