@@ -5,8 +5,7 @@ const COST_PER_EXTRA_COLOR = 80;
 const BASE_PRICE = 900;
 const STD_WIDTH_MM = 1254;
 const STD_HEIGHT_MM = 456;
-const STD_BLOCKS =
-  Math.floor(STD_WIDTH_MM / BLOCK_MM) * Math.floor(STD_HEIGHT_MM / BLOCK_MM);
+const STD_BLOCKS = Math.floor(STD_WIDTH_MM / BLOCK_MM) * Math.floor(STD_HEIGHT_MM / BLOCK_MM);
 const WHITE = '#ffffff';
 const CELL_PX = 20;
 
@@ -81,11 +80,13 @@ function startDrag(e) {
   dragStart = dragEnd = getEventCell(e);
   drawGrid();
 }
+
 function continueDrag(e) {
   if (!isDragging) return;
   dragEnd = getEventCell(e);
   drawGrid();
 }
+
 function endDrag(e) {
   if (!isDragging) return;
   dragEnd = getEventCell(e);
@@ -116,11 +117,18 @@ function calcPrice() {
       }
     }
   }
-  const extraBlocks = Math.max(blockCount - STD_BLOCKS, 0);
+  // Calculate extra blocks beyond standard
+  const extraBlocks = Math.max(blockCount - 394, 0);
   const extraBlocksCost = extraBlocks * COST_PER_EXTRA_BLOCK;
+  
+  // Calculate extra colors beyond the first one
   const extraColors = Math.max(usedColors.size - 1, 0);
   const extraColorsCost = extraColors * COST_PER_EXTRA_COLOR;
+  
+  // Total price
   const total = BASE_PRICE + extraBlocksCost + extraColorsCost;
+  
+  // Display the price
   priceDisplay.textContent =
     `Total Price: R${total.toFixed(2)} ` +
     `(Base R${BASE_PRICE}, +Blocks R${extraBlocksCost.toFixed(2)}, +Colours R${extraColorsCost.toFixed(2)})`;
